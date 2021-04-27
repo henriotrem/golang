@@ -1,4 +1,4 @@
-RAFT Protocl
+RAFT Protocol
 ====
 
 raft is a [Go](http://www.golang.org) library that manages a replicated
