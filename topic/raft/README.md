@@ -1,6 +1,8 @@
 RAFT Protocol
 ====
 
+![alt text](https://miro.medium.com/max/1400/0*t1x9nNs6KIf7RSv4.png)
+
 raft is a [Go](http://www.golang.org) library that manages a replicated
 log and can be used with an FSM to manage replicated state machines. It
 is a library for providing [consensus](http://en.wikipedia.org/wiki/Consensus_(computer_science)).
