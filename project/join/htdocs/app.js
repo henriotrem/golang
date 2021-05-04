@@ -7,8 +7,8 @@ var ws;
 var radialTreeData =  {"name": "#", "count": 0}
 updateRadialData()
 
-var intendedTreeData =  {"name": "#", "count": 0}
-updateIntendedData()
+var verticalTreeData =  {"name": "#", "count": 0}
+updateVerticalData()
 
 var network = []
 
@@ -132,10 +132,9 @@ var refreshLogs = function() {
 
 var refreshTree = function(ip) {
   if (trees[ip] != null) {
-    console.log(trees[ip])
-    intendedTreeData = trees[ip]
-    updateIntendedData()
-    scanTree(intendedTreeData)  
+    verticalTreeData = trees[ip]
+    updateVerticalData()
+    scanTree(verticalTreeData)  
     filterNodes(radialTreeData);    
     updateRadialData()
   }
