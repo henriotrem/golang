@@ -1,0 +1,20 @@
+.radialNode {
+cursor: pointer;
+}
+
+.radialNode circle {
+fill: #fff;
+stroke: steelblue;
+stroke-width: 1.5px;
+}
+
+.radialNode text {
+font: 10px sans-serif;
+font-weight: bold;
+}
+
+.radialLink {
+fill: none;
+stroke: #ccc;
+stroke-width: 1.5px;
+}

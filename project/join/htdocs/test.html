@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+    
+.node circle {
+fill: #fff;
+stroke: steelblue;
+stroke-width: 1.5px;
+}
+
+.node--internal text {
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+.node text {
+font: 10px sans-serif;
+font-weight: bold;
+}
+
+.link {
+fill: none;
+stroke: #ccc;
+stroke-width: 1.5px;
+}
+
+</style>
+
+<body>
+
+<!-- load the d3.js library -->    	
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+	
+var treeData =
+  {
+    
+		"name": "#",
+        "children": [
+          { "name": "#A" },
+          { "name": "#B" },
+          { "name": "#C" },
+          { "name": "#D" },
+          { 
+            "name": "#E",
+            "children": [
+                { "name": "#EA" },
+                { "name": "#EB" },
+                { "name": "#EC" },
+                { "name": "#ED" },
+                { "name": "#EE" },
+                { "name": "#EF" },
+                { "name": "#EG" },
+                { "name": "#EH" },
+                { "name": "#EI" },
+                { "name": "#EJ" },
+                { "name": "#EK" },
+                { "name": "#EL" },
+                { "name": "#EM" },
+                { 
+                    "name": "#EN",
+                    "children": [
+                        { "name": "#ENA" },
+                        { 
+                            "name": "#ENB",
+                            "children": [
+                                { "name": "#ENBA" },
+                                { "name": "#ENBB" },
+                                { "name": "#ENBC" },
+                                { "name": "#ENBD" },
+                                { "name": "#ENBE" },
+                                { "name": "#ENBF" },
+                                { "name": "#ENBG" },
+                                { "name": "#ENBH" },
+                                { "name": "#ENBI" },
+                                { "name": "#ENBJ" },
+                                { "name": "#ENBK" },
+                                { "name": "#ENBL" },
+                                { "name": "#ENBM" },
+                                { "name": "#ENBN" },
+                                { "name": "#ENBO" },
+                                { "name": "#ENBP" }
+                            ]
+                        },
+                        { "name": "#ENC" },
+                        { "name": "#END" },
+                        { "name": "#ENE" },
+                        { "name": "#ENF" },
+                        { "name": "#ENG" },
+                        { "name": "#ENH" },
+                        { "name": "#ENI" },
+                        { "name": "#ENJ" },
+                        { "name": "#ENK" },
+                        { "name": "#ENL" },
+                        { "name": "#ENM" },
+                        { "name": "#ENN" },
+                        { "name": "#ENO" },
+                        { "name": "#ENP" }
+                    ]
+                },
+                { "name": "#EO" },
+                { "name": "#EP" }
+            ]
+          },
+          { "name": "#F" },
+          { "name": "#G" },
+          { "name": "#H" },
+          { "name": "#I" },
+          { "name": "#J" },
+          { "name": "#K" },
+          { "name": "#L" },
+          { "name": "#M" },
+          { "name": "#N" },
+          { "name": "#O" },
+          { "name": "#P" }
+        ]
+  };
+
+// set the dimensions and margins of the diagram
+var width = 700,
+    height = 1000;
+
+// declares a tree layout and assigns the size
+var treemap = d3.tree()
+    .nodeSize([35, 150])
+
+//  assigns the data to a hierarchy using parent-child relationships
+var nodes = d3.hierarchy(treeData);
+
+// maps the node data to the tree layout
+nodes = treemap(nodes);
+
+nodes.descendants().forEach(function(node, idx) {
+    node.id = idx; 
+    if (node.parent != null && node.parent.parent != null) {
+        node.x = node.parent.parent.children[idx % node.parent.children.length].x; 
+    }
+});
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", height),
+    g = svg.append("g")
+      .attr("transform",
+            "translate(350,50)");
+
+// adds the links between the nodes
+var link = g.selectAll(".link")
+    .data( nodes.descendants().slice(1))
+  .enter().append("path")
+    .attr("class", "link")
+    /*.attr("d", function(d) {
+       return "M" + (d.x) + "," + d.y
+         + " " + (d.parent.x) + "," + d.parent.y;
+       });*/
+    .attr("d", function(d) {
+    return "M" + d.x + "," + d.y
+        + "C" + d.x + "," + (d.y + d.parent.y) / 2
+        + " " + d.parent.x + "," +  (d.y + d.parent.y) / 2
+        + " " + d.parent.x + "," + d.parent.y;
+    });
+
+// adds each node as a group
+var node = g.selectAll(".node")
+    .data(nodes.descendants())
+  .enter().append("g")
+    .attr("class", function(d) { 
+      return "node" + 
+        (d.children ? " node--internal" : " node--leaf"); })
+    .attr("transform", function(d) { 
+      return "translate(" + d.x + "," + d.y + ")"; });
+
+// adds the circle to the node
+node.append("circle")
+  .attr("r", 4.5)
+  .style("stroke", function(d) { return d.children ? "#4DB6AC" : "#2196F3" ; });
+
+// adds the text to the node
+node.append("text")
+  .attr("dy", ".35em")
+  .attr("y", function(d) { return d.children ? -20 : 20; })
+  .style("text-anchor", "middle")
+  .text(function(d) { return d.data.name; });
+
+    
+</script>
+</body>

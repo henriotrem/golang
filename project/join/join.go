@@ -20,7 +20,7 @@ var (
 type configuration struct {
 	Debug         bool   `default:"true"`
 	Scheme        string `default:"http"`
-	ListenAddress string `default:":8080"`
+	ListenAddress string `default:":8010"`
 	PrivateKey    string `default:"ssl/server.key"`
 	Certificate   string `default:"ssl/server.pem"`
 }
@@ -48,8 +48,8 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer c.Close()
-	kn := CreateKademliaNetwork(c)
-	defer kn.Quit()
+	network := CreateNetwork(c)
+	defer network.Quit()
 	for {
 		mt, msg, err := c.ReadMessage()
 		if err != nil {
@@ -60,17 +60,22 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 			handleErr(w, errors.New("only text message are supported"), http.StatusNotImplemented)
 			break
 		}
-		switch string(msg) {
-		case "INIT":
-			kn.Init()
-		case "NEW":
-			kn.New()
-		case "PRINT":
-			kn.Print()
-		case "QUIT":
-			kn.Quit()
-			kn = CreateKademliaNetwork(c)
-		}
+		handleNetworkRequest(c, network, string(msg))
+	}
+}
+
+func handleNetworkRequest(c *websocket.Conn, network *Network, cmd string) {
+
+	switch cmd {
+	case "INIT":
+		network.Init()
+	case "NEW":
+		network.New()
+	case "PRINT":
+		network.Print()
+	case "QUIT":
+		network.Quit()
+		network = CreateNetwork(c)
 	}
 }
 

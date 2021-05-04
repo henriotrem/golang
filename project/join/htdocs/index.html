@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<link rel="stylesheet" href="radial-tidy-tree.css">
+<link rel="stylesheet" href="hierarchical-edge.css">
+<link rel="stylesheet" href="intended-collapsible-tree.css">
+</head>
+<body style="padding: 50px 50px">
+  <form>
+    <button id="open">Open</button>
+    <button id="init">Init</button>
+    <button id="new">New</button>
+    <button id="quit">Quit</button>
+    <button id="close">Close</button>
+  </form>
+  Select a server :
+  <select id="select">
+    <option value="network">Network</option>
+  </select>
+  <table width="100%">
+    <tr>
+      <td valign="top" width="33%">
+        <h3>Network</h3>
+        <div id="hierarchical" style="width: 100%;"></div>
+      </td>
+      <td valign="top" width="33%">
+        <h3>Tree</h3>
+        <div id="radial" style="width: 100%;"></div>
+      </td>
+      <td valign="top" width="33%">
+        <h3>Indexes</h3>
+        <div id="indexes" style="width: 100%; height: 600px; overflow-y: scroll;"></div>
+      </td>
+    </tr>    
+    <tr>
+      <td valign="top" width="33%">
+        <h3>Server</h3>
+        <pre id="server" style="width: 100%; height: 400px; overflow-y: scroll;"></pre>
+      </td>
+      <td valign="top" width="33%">
+        <h3>Input</h3>
+        <div id="inputLogs" style="width: 100%; height: 400px; overflow-y: scroll;"></div>
+      </td>
+      <td valign="top" width="33%">
+        <h3>Output</h3>
+        <div id="outputLogs" style="width: 100%; height: 400px; overflow-y: scroll;"></div>
+      </td>
+    </tr>
+  </table>
+  <script src="intended-collapsible-tree.js"></script>
+  <script src="radial-tidy-tree.js"></script>
+  <script src="hierarchical-edge.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

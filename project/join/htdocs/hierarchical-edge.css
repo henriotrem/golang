@@ -1,0 +1,44 @@
+.hierarchicalNode {
+font: 10px sans-serif;
+fill: #bbb;
+font-weight: bold;
+}
+
+.hierarchicalNode:hover {
+fill: #000;
+}
+
+.hierarchicalLink {
+fill: none;
+stroke: #ccc;
+stroke-width: 1.5px;
+pointer-events: none;
+}
+
+.hierarchicalNode:hover,
+.hierarchicalNode--source,
+.hierarchicalNode--target {
+font-weight: 700;
+}
+
+.hierarchicalNode--source {
+fill: #2ca02c;
+}
+
+.hierarchicalNode--target {
+fill: #d62728;
+}
+
+.hierarchicalLink--source,
+.hierarchicalLink--target {
+stroke-opacity: 1;
+stroke-width: 2px;
+}
+
+.hierarchicalLink--source {
+stroke: #d62728;
+}
+
+.hierarchicalLink--target {
+stroke: #2ca02c;
+}
